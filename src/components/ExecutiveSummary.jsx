@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, Button } from '@mui/material';
+import { Box, Typography, Paper, Button, Stack } from '@mui/material';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -64,46 +64,84 @@ const ExecutiveSummary = ({ formData = {}, name = 'Unknown', subjects = [] }) =>
   };
 
   return (
-    <Box sx={{ mb: 4 }}>
-      <Typography variant="h4">Executive Summary</Typography>
-      <Paper sx={{ padding: 2, mt: 2 }}>
-        <Typography variant="body1">
-          <strong>Time:</strong> {executiveSummary.Time}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Batch:</strong> {executiveSummary.Batch}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Combined Batch:</strong> {executiveSummary.CombinedBatch}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Course Director:</strong> {executiveSummary.CourseDirector}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Dates:</strong> {executiveSummary.Date}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Lecture Type:</strong> {executiveSummary.Lecture}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Lecturer:</strong> {executiveSummary.Lecturer}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Subjects:</strong> {executiveSummary.Subject}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Halls:</strong> {executiveSummary.Hall}
-        </Typography>
-      </Paper>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleBooking}
-        sx={{ mt: 2 }}
-        disabled={!formData.time || !formData.batch || (formData.seats || []).length === 0}
+    <Box
+      sx={{
+        mb: { xs: 8, sm: 6 }, // Extra bottom margin on mobile to avoid overlap with fixed elements
+        px: { xs: 1, sm: 0 }, // Slight side padding on small screens
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' },
+          textAlign: { xs: 'center', sm: 'left' },
+        }}
       >
-        Book
-      </Button>
+        Executive Summary
+      </Typography>
+
+      <Paper
+        elevation={4}
+        sx={{
+          p: { xs: 3, sm: 4 },
+          borderRadius: 3,
+          bgcolor: 'background.paper',
+          boxShadow: 3,
+        }}
+      >
+        <Stack spacing={{ xs: 2, sm: 2.5 }}>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Time:</strong> {executiveSummary.Time}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Batch:</strong> {executiveSummary.Batch}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Combined Batch:</strong> {executiveSummary.CombinedBatch}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Course Director:</strong> {executiveSummary.CourseDirector}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Dates:</strong> {executiveSummary.Date}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Lecture Type:</strong> {executiveSummary.Lecture}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Lecturer:</strong> {executiveSummary.Lecturer}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Subjects:</strong> {executiveSummary.Subject}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }}>
+            <strong>Halls:</strong> {executiveSummary.Hall}
+          </Typography>
+        </Stack>
+
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={handleBooking}
+          disabled={!formData.time || !formData.batch || (formData.seats || []).length === 0}
+          sx={{
+            mt: { xs: 4, sm: 5 },
+            py: { xs: 1.8, sm: 2 },
+            fontSize: { xs: '1.1rem', sm: '1.2rem' },
+            borderRadius: 2,
+            textTransform: 'none',
+            boxShadow: 3,
+            '&:hover': {
+              boxShadow: 6,
+            },
+          }}
+        >
+          Book Halls
+        </Button>
+      </Paper>
     </Box>
   );
 };

@@ -13,7 +13,7 @@ const Header = () => {
       position="static"
       color="primary"
       sx={{
-        width: '100vw',           // Full viewport width
+        width: '100vw', // Full viewport width
         left: 0,
         right: 0,
         boxShadow: 3,
@@ -29,6 +29,7 @@ const Header = () => {
           py: 1,
           minHeight: { xs: 64, sm: 70 }, // Slightly taller on mobile
           justifyContent: 'space-between',
+          flexWrap: 'nowrap', // Prevent unwanted wrapping
         }}
       >
         {/* Left: Logo + Title - Clickable */}
@@ -44,8 +45,8 @@ const Header = () => {
           {/* Logo Container */}
           <Box
             sx={{
-              width: { xs: 140, sm: 180, md: 190 },
-              height: { xs: 40, sm: 48, md: 50 },
+              width: { xs: 120, sm: 160, md: 190 }, // Slightly smaller on very small screens
+              height: { xs: 36, sm: 44, md: 50 },
               borderRadius: '4px',
               overflow: 'hidden',
               backgroundColor: 'white',
@@ -54,6 +55,7 @@ const Header = () => {
               alignItems: 'center',
               mr: { xs: 1.5, sm: 2 },
               boxShadow: 1,
+              flexShrink: 0, // Prevent logo from shrinking too much
             }}
           >
             <img
@@ -62,13 +64,13 @@ const Header = () => {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain', // Better than 'cover' for logos
+                objectFit: 'contain',
                 padding: '4px',
               }}
             />
           </Box>
 
-          {/* Title - Hidden on very small screens if needed */}
+          {/* Full Title - Visible on sm and up */}
           <Typography
             variant="h6"
             component="div"
@@ -77,19 +79,20 @@ const Header = () => {
               color: 'white',
               fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.25rem' },
               whiteSpace: 'nowrap',
-              display: { xs: 'none', sm: 'block' }, // Hide text on xs screens if too cramped
+              display: { xs: 'none', sm: 'block' },
             }}
           >
             SOCE Lecture Hall Reservation System
           </Typography>
 
-          {/* Mobile-friendly short title */}
+          {/* Short Mobile Title - Only on xs */}
           <Typography
             variant="h6"
             sx={{
               fontWeight: 'bold',
               color: 'white',
-              fontSize: '0.9rem',
+              fontSize: { xs: '0.85rem', sm: '0.95rem' },
+              whiteSpace: 'nowrap',
               display: { xs: 'block', sm: 'none' },
             }}
           >
@@ -98,7 +101,13 @@ const Header = () => {
         </Box>
 
         {/* Right: Login / Sign Up Buttons */}
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: { xs: 1, sm: 2 },
+            flexShrink: 0, // Prevent buttons from shrinking
+          }}
+        >
           <Button
             variant="outlined"
             color="inherit"
@@ -111,18 +120,24 @@ const Header = () => {
               },
               textTransform: 'none',
               fontWeight: 'medium',
+              fontSize: { xs: '0.85rem', sm: '0.9rem' },
+              px: { xs: 2, sm: 3 },
+              py: { xs: 0.8, sm: 1 },
             }}
             onClick={() => navigate('/login')}
           >
             Log In
           </Button>
+
           <Button
             variant="contained"
             color="secondary"
             sx={{
               textTransform: 'none',
               fontWeight: 'medium',
-              px: 3,
+              px: { xs: 2.5, sm: 3 },
+              py: { xs: 0.8, sm: 1 },
+              fontSize: { xs: '0.85rem', sm: '0.9rem' },
             }}
             onClick={() => navigate('/signup')}
           >

@@ -16,6 +16,9 @@ const BottomNavigationBar = () => {
         right: 0,
         zIndex: 1000,
         boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.1)",
+        // Added: Safe area support for notched phones (iPhone X and later, modern Android)
+        pb: { xs: "env(safe-area-inset-bottom)", sm: 0 }, // Adds padding at bottom on notched devices
+        bgcolor: "background.paper",
       }}
       elevation={3}
     >
@@ -43,6 +46,34 @@ const BottomNavigationBar = () => {
             default:
               break;
           }
+        }}
+        // Improved responsiveness & touch targets
+        sx={{
+          height: { xs: 66, sm: 56 }, // Slightly taller on mobile for better touch
+          "& .MuiBottomNavigationAction-root": {
+            minWidth: 64,
+            padding: "6px 0 8px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "1.5rem", // Consistent icon size
+            },
+            "& .MuiBottomNavigationAction-label": {
+              fontSize: "0.75rem",
+              mt: 0.5,
+            },
+          },
+          // Special styling for the middle "Add" button (your custom style preserved)
+          "& .MuiBottomNavigationAction-root:nth-of-type(3)": {
+            "& .MuiSvgIcon-root": {
+              bgcolor: "#ddd",
+              borderRadius: "10px",
+              padding: "5px",
+              fontSize: "2rem", // Make the + icon stand out
+            },
+          },
+          // Favorites icon color preserved
+          "& .MuiBottomNavigationAction-root:nth-of-type(4) .MuiSvgIcon-root": {
+            color: "black",
+          },
         }}
       >
         <BottomNavigationAction label="Home" icon={<Home />} />

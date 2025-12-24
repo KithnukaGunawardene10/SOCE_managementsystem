@@ -1,4 +1,5 @@
-// MainScreen.jsx
+// MainScreen.jsx (Updated for full responsiveness and mobile left-alignment)
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
@@ -11,7 +12,7 @@ const MainScreen = () => {
   const [bookedSeats, setBookedSeats] = useState({});
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
-  // Reordered floors (as in your original code)
+  // Reordered floors
   const floors = [
     { heading: '4th Floor', seats: ['Harison Hall', 'PC 01', 'PC 03', 'Net Engi lab', 'Eng Lab', 'ICT E Lab'] },
     { heading: '3rd Floor', seats: ['LH 20', 'LH 301', 'LH 302', 'LH 303', 'LH 304', 'LH 305', 'LH 306', 'LH 307', 'LH 308'] },
@@ -60,21 +61,9 @@ const MainScreen = () => {
   }, [bookedSeats]);
 
   useEffect(() => {
-    // Initial fetch
     fetchBookedSeats();
-
-    // Auto-refresh every 30 seconds (you can change this)
-    const refreshInterval = setInterval(() => {
-      fetchBookedSeats();
-      console.log("Background refresh: booked seats updated");
-    }, 30 * 1000); // 30 seconds
-
-    // Real-time clock update every second
-    const clockInterval = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    // Cleanup
+    const refreshInterval = setInterval(fetchBookedSeats, 30 * 1000);
+    const clockInterval = setInterval(() => setCurrentDateTime(new Date()), 1000);
     return () => {
       clearInterval(refreshInterval);
       clearInterval(clockInterval);
@@ -121,7 +110,7 @@ const MainScreen = () => {
           overflowY: "auto",
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
           <Grid container spacing={4}>
             {floors.map((floor) => (
               <Grid item xs={12} key={floor.heading}>
@@ -132,31 +121,29 @@ const MainScreen = () => {
                     color: "#90caf9",
                     fontWeight: "bold",
                     mb: 3,
-                    textAlign: { xs: "center", sm: "left" },
+                    textAlign: { xs: "left", sm: "left" }, // Always left-aligned (including mobile)
                   }}
                 >
                   {floor.heading}
                 </Typography>
-
-                <Grid container spacing={3} justifyContent="center">
+                <Grid container spacing={2} justifyContent="flex-start"> {/* Left-aligned cards */}
                   {floor.seats.map((seat) => {
                     const seatDetails = filteredSeats[seat];
                     const isBooked = Boolean(seatDetails);
-
                     return (
                       <Grid
                         item
                         key={seat}
-                        xs={11}
-                        sm={6}
-                        md={4}
-                        lg={3}
-                        xl={2.4}
+                        xs={12}     // Full width on very small screens
+                        sm={6}      // 2 columns on small tablets
+                        md={4}      // 3 columns on medium
+                        lg={3}      // 4 columns on large
+                        xl={3}      // 4 columns on extra large (adjusted for better fit)
                       >
                         <Paper
                           elevation={isBooked ? 8 : 3}
                           sx={{
-                            p: 2.5,
+                            p: { xs: 2, sm: 2.5 },
                             border: isBooked ? "2px solid #616161" : "1px solid #424242",
                             bgcolor: isBooked ? "#212121" : "#1E1E1E",
                             color: isBooked ? "#FFFFFF" : "#BDBDBD",
@@ -168,13 +155,12 @@ const MainScreen = () => {
                               boxShadow: isBooked ? "0 12px 30px rgba(0, 0, 0, 0.7)" : "none",
                             },
                             textAlign: "center",
-                            minHeight: 160,
+                            minHeight: { xs: 140, sm: 160 },
                           }}
                         >
                           <Typography variant="h6" sx={{ color: "#FFFFFF", mb: 1.5 }}>
                             {seat}
                           </Typography>
-
                           {isBooked ? (
                             <>
                               <Typography variant="body2" sx={{ fontWeight: "bold", color: "#90caf9" }}>
@@ -191,7 +177,7 @@ const MainScreen = () => {
                               </Typography>
                             </>
                           ) : (
-                            <Typography variant="body2" color="#00ff0dff" sx={{ mt: 4 }}>
+                            <Typography variant="body2" color="#66BB6A" sx={{ mt: 4 }}>
                               Available
                             </Typography>
                           )}
@@ -205,7 +191,6 @@ const MainScreen = () => {
           </Grid>
         </Container>
       </Box>
-
       <Footer />
     </>
   );

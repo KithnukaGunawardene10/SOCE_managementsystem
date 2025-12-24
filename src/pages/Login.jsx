@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState } from "react";
 import {
   Box,
@@ -20,7 +19,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
@@ -38,39 +36,32 @@ const Login = () => {
 
   const validateFields = () => {
     let valid = true;
-
     if (!email.includes("@") || !email.includes(".")) {
       setEmailError("Please enter a valid email.");
       valid = false;
     } else {
       setEmailError("");
     }
-
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters.");
       valid = false;
     } else {
       setPasswordError("");
     }
-
     return valid;
   };
 
   const handleLogin = async () => {
     if (!validateFields()) return;
-
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const userEmail = userCredential.user.email;
-
       // Fetch user details from Firestore
       const usersQuery = query(collection(db, "users"), where("email", "==", userEmail));
       const querySnapshot = await getDocs(usersQuery);
-
       if (!querySnapshot.empty) {
         const userDoc = querySnapshot.docs[0].data();
         const { name, role } = userDoc;
-
         // Redirect based on role
         if (role === "Program Office") {
           navigate("/Programmingofficer", { state: { name } });
@@ -111,12 +102,19 @@ const Login = () => {
         },
       }}
     >
-      <Container maxWidth="sm" sx={{ position: "relative", zIndex: 2 }}>
+      <Container
+        maxWidth="sm"
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          px: { xs: 2, sm: 3 }, // Extra side padding on mobile
+        }}
+      >
         <Paper
           elevation={24}
           sx={{
-            p: { xs: 4, sm: 6 },
-            borderRadius: 4,
+            p: { xs: 4, sm: 6, md: 7 },
+            borderRadius: { xs: 3, sm: 4 },
             background: "rgba(20, 20, 30, 0.85)",
             backdropFilter: "blur(16px)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -132,8 +130,9 @@ const Login = () => {
               background: "linear-gradient(90deg, #00B0FF, #00E5FF)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              mb: 3,
+              mb: { xs: 3, sm: 4 },
               letterSpacing: "0.5px",
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "2.8rem" },
             }}
           >
             Welcome Back
@@ -143,7 +142,11 @@ const Login = () => {
             variant="body1"
             align="center"
             color="#aaa"
-            sx={{ mb: 5 }}
+            sx={{
+              mb: { xs: 4, sm: 5 },
+              fontSize: { xs: "0.95rem", sm: "1rem" },
+              lineHeight: 1.6,
+            }}
           >
             Log in to your SOCE Lecture Hall Reservation account
           </Typography>
@@ -159,13 +162,16 @@ const Login = () => {
             error={!!emailError}
             helperText={emailError}
             sx={{
+              mb: { xs: 2, sm: 3 },
               "& .MuiOutlinedInput-root": {
                 borderRadius: 3,
                 backgroundColor: "rgba(255, 255, 255, 0.05)",
                 "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
+                "& fieldset": { borderColor: "rgba(255, 255, 255, 0.3)" },
               },
               "& .MuiInputLabel-root": { color: "#aaa" },
               "& .MuiOutlinedInput-input": { color: "#fff" },
+              "& .MuiFormHelperText-root": { color: "#ff6b6b" },
             }}
           />
 
@@ -180,13 +186,16 @@ const Login = () => {
             error={!!passwordError}
             helperText={passwordError}
             sx={{
+              mb: { xs: 3, sm: 4 },
               "& .MuiOutlinedInput-root": {
                 borderRadius: 3,
                 backgroundColor: "rgba(255, 255, 255, 0.05)",
                 "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
+                "& fieldset": { borderColor: "rgba(255, 255, 255, 0.3)" },
               },
               "& .MuiInputLabel-root": { color: "#aaa" },
               "& .MuiOutlinedInput-input": { color: "#fff" },
+              "& .MuiFormHelperText-root": { color: "#ff6b6b" },
             }}
           />
 
@@ -196,9 +205,9 @@ const Login = () => {
             fullWidth
             onClick={handleLogin}
             sx={{
-              mt: 5,
-              py: 2,
-              fontSize: "1.2rem",
+              mt: { xs: 4, sm: 5 },
+              py: { xs: 1.8, sm: 2 },
+              fontSize: { xs: "1.1rem", sm: "1.2rem" },
               fontWeight: 700,
               textTransform: "none",
               borderRadius: 3,
@@ -215,7 +224,7 @@ const Login = () => {
             Log In
           </Button>
 
-          <Box sx={{ mt: 4, textAlign: "center" }}>
+          <Box sx={{ mt: { xs: 3, sm: 4 }, textAlign: "center" }}>
             <Link
               component="button"
               variant="body2"
@@ -224,6 +233,7 @@ const Login = () => {
                 color: "#00E5FF",
                 fontWeight: 600,
                 textDecoration: "none",
+                fontSize: { xs: "0.95rem", sm: "1rem" },
                 "&:hover": { textDecoration: "underline" },
               }}
             >
@@ -231,8 +241,8 @@ const Login = () => {
             </Link>
           </Box>
 
-          <Box sx={{ mt: 3, textAlign: "center" }}>
-            <Typography variant="body2" color="#ccc">
+          <Box sx={{ mt: { xs: 2.5, sm: 3 }, textAlign: "center" }}>
+            <Typography variant="body2" color="#ccc" sx={{ fontSize: { xs: "0.95rem", sm: "1rem" } }}>
               Don't have an account?{" "}
               <Link
                 component="button"
@@ -242,6 +252,7 @@ const Login = () => {
                   fontWeight: 600,
                   color: "#00E5FF",
                   textDecoration: "none",
+                  fontSize: { xs: "0.95rem", sm: "1rem" },
                   "&:hover": { textDecoration: "underline" },
                 }}
               >

@@ -1,279 +1,283 @@
-
+/* Main Booking Form Container */
 .booking-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    min-height: 100vh;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Changed from center to start for better top spacing */
+  padding: 20px 10px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Shared Section Styles (Date, Time, Show Type, Batch, Seat Selection, Summary) */
+.date-selection,
+.time-selection,
+.show-type-selection,
+.batch-selection,
+.seat-selection,
+.booking-summary {
+  width: 90%;                    /* Increased from 80% for better mobile use */
+  max-width: 600px;              /* Limit max width on large screens */
+  margin-bottom: 24px;
+  padding: 20px 16px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Section Headings */
+.date-selection h3,
+.time-selection h3,
+.show-type-selection h3,
+.batch-selection h3 {
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Button Containers (Date, Time, Show Type, Batch) */
+.date-options,
+.time-options,
+.show-type-options,
+.batch-options {
+  display: flex;
+  flex-wrap: wrap;               /* Allow wrapping on small screens */
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Unified Button Styles for Selection Buttons */
+.date-options button,
+.time-options button,
+.show-type-options button,
+.batch-options button {
+  min-width: 120px;              /* Prevent buttons from being too narrow */
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+  flex: 1 1 140px;                /* Grow but maintain min width */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.date-options button:hover,
+.time-options button:hover,
+.show-type-options button:hover,
+.batch-options button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.date-options button.selected,
+.time-options button.selected,
+.show-type-options button.selected,
+.batch-options button.selected {
+  background-color: #28a745;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Horizontal Scrollable Date Row (if needed) */
+.date-scroll-container {
+  overflow-x: auto;
+  width: 100%;
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.date-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.date-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 3px;
+}
+
+/* Seat Selection Specific Styles */
+.seat-selection {
+  overflow-x: hidden; /* We'll handle scrolling inside columns container */
+}
+
+.seat-columns {
+  display: flex;
+  justify-content: flex-start;   /* Left align on mobile, natural flow */
+  gap: 16px;
+  overflow-x: auto;
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.seat-columns::-webkit-scrollbar {
+  height: 8px;
+}
+
+.seat-columns::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.seat-columns::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Seat Column */
+.seat-column {
+  flex: 0 0 160px;               /* Fixed width optimized for mobile */
+  min-width: 160px;
+  padding: 8px;
+}
+
+/* Individual Seat */
+.seat {
+  background-color: #f0f0f0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 16px 10px;
+  margin: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+}
+
+.seat:hover {
+  background-color: #e0e0e0;
+  border-color: #aaa;
+  transform: translateY(-3px);
+}
+
+.seat.selected {
+  background-color: #ffa500;
+  color: #fff;
+  border-color: #e69500;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+}
+
+.seat-info {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+/* Book Button */
+.book-button {
+  padding: 14px 32px;
+  background-color: #28a745;
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+.book-button:hover {
+  background-color: #218838;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Icon Button (e.g., info icon on seat) */
+.iconButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.iconButton:hover {
+  background-color: #fff;
+  transform: scale(1.1);
+}
+
+/* Mobile-Specific Optimizations */
+@media (max-width: 768px) {
+  .booking-form {
+    padding: 16px 8px;
   }
-  
-  /* Date, Time, and Show Type Sections */
+
   .date-selection,
   .time-selection,
   .show-type-selection,
+  .batch-selection,
+  .seat-selection,
   .booking-summary {
-    width: 80%;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    padding: 18px 14px;
   }
-  
-  /* Seat Selection */
-  .seat-selection {
-    width: 80%;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-  }
-  
-  /* Seat Columns - Center Align */
-  .seat-columns {
-    display: flex;
-    justify-content: center; /* Center align columns horizontally */
-    overflow-x: auto; /* Horizontal scrolling */
-    white-space: nowrap; /* Prevent wrapping to next line */
-  }
-  
-  /* Seat Column */
-  .seat-column {
-    flex: 0 0 auto; /* Prevent columns from shrinking or growing */
-    min-width: 180px; /* Minimum width for each column */
-    padding: 10px;
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-  }
-  
-  /* Seat Styles */
-  .seat {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin: 10px 0;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 5px;
-    position: relative;
-    transition: background-color 0.3s ease;
-  }
-  
-  .seat.selected {
-    background-color: #ffa500; /* Highlight selected seat */
-    color: #fff;
-  }
-  
-  .seat-info {
-    font-size: 0.8em;
-    color: #666;
-    margin-top: 5px;
-  }
-  
-  .seat:hover {
-    background-color: #e0e0e0;
-  }
-  
-  /* Scrollbar Styling */
-  .seat-columns::-webkit-scrollbar {
-    height: 8px;
-  }
-  
-  .seat-columns::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
-  }
-  
-  .seat-columns::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-  
-  /* Booking Summary Button */
-  .book-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .book-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Beautifying Date, Time, and Show Type Sections */
-  .date-selection,
-  .time-selection,
-  .show-type-selection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .date-selection h3,
-  .time-selection h3,
-  .show-type-selection h3 {
-    margin-bottom: 15px;
-    color: #333;
-    font-size: 1.2em;
-    text-transform: uppercase;
-  }
-  
-  /* Button Container */
-  .date-options,
-  .time-options,
-  .show-type-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  /* Button Styles */
+
   .date-options button,
   .time-options button,
-  .show-type-options button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 1em;
-    text-transform: capitalize;
-  }
-  
-  .date-options button:hover,
-  .time-options button:hover,
-  .show-type-options button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .date-options button.selected,
-  .time-options button.selected,
-  .show-type-options button.selected {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .date-options button:focus,
-  .time-options button:focus,
-  .show-type-options button:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 600px) {
-    .date-options,
-    .time-options,
-    .show-type-options {
-      flex-direction: column;
-    }
-  }
-  .date-scroll-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    width: 100%;
-    padding: 10px 0;
-  }
-  
-  .date-options {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px; /* Adjust as needed */
-  }
-  
-  .date-options button {
-    background: #0091ff; /* Light background for buttons */
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    white-space: nowrap;
-  }
-  
-  .date-options button.selected {
-    background: #04ff00; /* Highlight color for selected date */
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .date-options button:hover {
-    background: #e2e6ea; /* Hover background color */
-    transform: scale(1.05);
-  }
-  
-  /* Select Batch Section */
-  .batch-selection {
-    width: 80%;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Batch Options Container */
-  .batch-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  /* Batch Button Styles */
+  .show-type-options button,
   .batch-options button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 1em;
-    text-transform: capitalize;
+    flex: 1 1 45%;               /* 2 buttons per row */
+    min-width: 110px;
+    padding: 14px 12px;
+    font-size: 0.95em;
   }
-  
-  .batch-options button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .batch-options button.selected {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .batch-options button:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  .iconButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-  }
-  
-  .iconButton:hover {
-    background-color: rgba(255, 255, 255, 1);
-  }
-  
 
+  .seat-column {
+    flex: 0 0 150px;
+    min-width: 150px;
+  }
 
+  .book-button {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .date-options button,
+  .time-options button,
+  .show-type-options button,
+  .batch-options button {
+    flex: 1 1 100%;              /* Full width on very small screens */
+    margin-bottom: 8px;
+  }
+
+  .seat {
+    padding: 14px 8px;
+    font-size: 0.95em;
+  }
+
+  h3 {
+    font-size: 1.2em !important;
+  }
+}
