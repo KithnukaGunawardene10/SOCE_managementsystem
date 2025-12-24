@@ -1,0 +1,22 @@
+/* Ensure full-width layout */
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Adjust Paper for responsiveness */
+.paper {
+  transition: all 0.3s ease;
+}
+
+.paper:hover {
+  transform: scale(1.05);
+} 
+
+/* Responsive Grid */
+@media (max-width: 600px) {
+  .grid-item {
+    flex: 0 0 100%;
+  }
+}

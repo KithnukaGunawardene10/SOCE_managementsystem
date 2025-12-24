@@ -1,0 +1,279 @@
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    text-align: center;
+  }
+  
+  /* Date, Time, and Show Type Sections */
+  .date-selection,
+  .time-selection,
+  .show-type-selection,
+  .booking-summary {
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Seat Selection */
+  .seat-selection {
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
+  
+  /* Seat Columns - Center Align */
+  .seat-columns {
+    display: flex;
+    justify-content: center; /* Center align columns horizontally */
+    overflow-x: auto; /* Horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping to next line */
+  }
+  
+  /* Seat Column */
+  .seat-column {
+    flex: 0 0 auto; /* Prevent columns from shrinking or growing */
+    min-width: 180px; /* Minimum width for each column */
+    padding: 10px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+  }
+  
+  /* Seat Styles */
+  .seat {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+  
+  .seat.selected {
+    background-color: #ffa500; /* Highlight selected seat */
+    color: #fff;
+  }
+  
+  .seat-info {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .seat:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Scrollbar Styling */
+  .seat-columns::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .seat-columns::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .seat-columns::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  /* Booking Summary Button */
+  .book-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Beautifying Date, Time, and Show Type Sections */
+  .date-selection,
+  .time-selection,
+  .show-type-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date-selection h3,
+  .time-selection h3,
+  .show-type-selection h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.2em;
+    text-transform: uppercase;
+  }
+  
+  /* Button Container */
+  .date-options,
+  .time-options,
+  .show-type-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Button Styles */
+  .date-options button,
+  .time-options button,
+  .show-type-options button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1em;
+    text-transform: capitalize;
+  }
+  
+  .date-options button:hover,
+  .time-options button:hover,
+  .show-type-options button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .date-options button.selected,
+  .time-options button.selected,
+  .show-type-options button.selected {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .date-options button:focus,
+  .time-options button:focus,
+  .show-type-options button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    .date-options,
+    .time-options,
+    .show-type-options {
+      flex-direction: column;
+    }
+  }
+  .date-scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .date-options {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px; /* Adjust as needed */
+  }
+  
+  .date-options button {
+    background: #0091ff; /* Light background for buttons */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    white-space: nowrap;
+  }
+  
+  .date-options button.selected {
+    background: #04ff00; /* Highlight color for selected date */
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .date-options button:hover {
+    background: #e2e6ea; /* Hover background color */
+    transform: scale(1.05);
+  }
+  
+  /* Select Batch Section */
+  .batch-selection {
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Batch Options Container */
+  .batch-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Batch Button Styles */
+  .batch-options button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1em;
+    text-transform: capitalize;
+  }
+  
+  .batch-options button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .batch-options button.selected {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .batch-options button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .iconButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+  }
+  
+  .iconButton:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+
+
